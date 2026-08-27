@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: protocol-vantage-public
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: VANTAGE_ENV
+        value: production
+      - key: VANTAGE_PRIORITY_SOURCES_ENABLED
+        value: "1"
+      - key: VANTAGE_DB_PATH
+        value: /app/data/vantage.sqlite3
+      - key: VANTAGE_ARTIFACTS_ROOT
+        value: /app/data/courses
+      - key: VANTAGE_BACKUP_DIR
+        value: /app/data/backup
+      - key: VANTAGE_SESSION_SECRET
+        generateValue: true
+      - key: VANTAGE_ACCESS_TOKEN
+        sync: false
+      - key: VANTAGE_ALLOWED_ORIGINS
+        sync: false
+      - key: GRU_CALIBRATION_ACTIVATION
+        value: "0"
+      - key: HF_TOKEN
+        sync: false
+      - key: HF_BACKUP_REPO_ID
+        sync: false
+      - key: HF_BACKUP_REPO_TYPE
+        value: dataset
+      - key: HF_BACKUP_CREATE_REPO
+        value: "0"
